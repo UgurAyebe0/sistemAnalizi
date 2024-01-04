@@ -19,7 +19,7 @@ public class comboBox {
             case "Classroom":
                 return arrayList("Type", "Classroom");
             case "Lesson":
-                return arrayList("Name", "Lesson");
+                return arrayListe();
             case "Day":
                 return arrayListDays();
             default:
@@ -33,8 +33,17 @@ public class comboBox {
         String sql = "SELECT " + Data + " from " + Table;
         return returnListe.main(sql);
     }
+    public static ArrayList arrayListe() {
+        String sql = "SELECT code,name from Lesson";
+        ArrayList liste = returnListe.main(sql);
+        ArrayList returnlen = new ArrayList();
+        for (int i = 0; i < liste.size(); i = i + 2) {
+            returnlen.add("(" + liste.get(i) + ") " + liste.get(i+1));
+        }
+        return returnlen;
+    }
     public static ArrayList arrayListDays() {
-        String sql = "SELECT Day from Days Where Confirmation = 1";
+        String sql = "SELECT Day from Days";
         return returnListe.main(sql);
     }
 }

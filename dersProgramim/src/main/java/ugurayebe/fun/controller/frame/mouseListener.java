@@ -12,15 +12,13 @@ import static ugurayebe.fun.listener.TextFieldEntry.findTextFieldEntry;
 import static ugurayebe.fun.listener.veriables.*;
 
 public class mouseListener {
-    public static void addMouseListenerToTable(ArrayList fieldNames) {
+    public static void addMouseListenerToTable(ArrayList fieldNames, String frameType) {
     table.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
-
                 int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1 && selectedRow < tableModel.getRowCount()) {
-
+                if (selectedRow != -1 && selectedRow < tableModel.getRowCount() && !frameType.equals("teacherCourses")) {
                     for (int i = 0; i < fieldNames.size(); i++) {
                         String data = (String) fieldNames.get(i);
                         if (data.startsWith("jComboBox")) {

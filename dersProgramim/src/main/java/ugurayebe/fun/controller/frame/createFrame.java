@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import static ugurayebe.fun.controller.frame.button.backButton.backButton;
 import static ugurayebe.fun.controller.frame.button.loginButton.loginButton;
+import static ugurayebe.fun.controller.frame.button.nextButton.nextButton;
 import static ugurayebe.fun.controller.frame.button.pdfButton.pdfButton;
 import static ugurayebe.fun.controller.frame.button.removeButton.removeButton;
 import static ugurayebe.fun.controller.frame.button.saveButton.saveButton;
@@ -71,17 +72,27 @@ public class createFrame {
         } else {
 
 
-            JButton saveButton = saveButton(fieldNames, frameType, tabloSql);
-            JButton removeButton = removeButton(fieldNames, frameType, tabloSql);
-            JButton backButton = backButton();
-            JButton updateButton = updateButton(fieldNames, frameType, tabloSql);
             JButton pdfButton = pdfButton(fieldNames, frameType, tabloSql);
-//
             buttonPanel.add(pdfButton);
-            buttonPanel.add(updateButton);
+
+            if (!frameType.equals("teacherCourses") && !frameType.equals("Days")) {
+                JButton updateButton = updateButton(fieldNames, frameType, tabloSql);
+                buttonPanel.add(updateButton);
+            }
+
+            JButton saveButton = saveButton(fieldNames, frameType, tabloSql);
             buttonPanel.add(saveButton);
+
+            JButton removeButton = removeButton(fieldNames, frameType, tabloSql);
             buttonPanel.add(removeButton);
+
+            JButton backButton = backButton();
             buttonPanel.add(backButton);
+
+            if (frameType.equals("Days")) {
+                JButton nextButton = nextButton();
+                buttonPanel.add(nextButton);
+            }
 
             Vector<String> columnNames;
             columnNames = new Vector<>();
@@ -110,7 +121,7 @@ public class createFrame {
                     if (e.getClickCount() == 2) {
                         int selectedRow = table.getSelectedRow();
                         if (selectedRow != -1) {
-                            addMouseListenerToTable(fieldNames);
+                            addMouseListenerToTable(fieldNames, frameType);
                         }
                     }
                 }

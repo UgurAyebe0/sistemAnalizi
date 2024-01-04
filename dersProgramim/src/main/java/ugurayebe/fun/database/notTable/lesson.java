@@ -11,6 +11,7 @@ public class lesson {
                 + "Code VARCHAR(15) NOT NULL UNIQUE,"
                 + "Name VARCHAR(50) NOT NULL,"
                 + "Time VARCHAR(255) NOT NULL,"
+                + "Student INT NOT NULL,"
                 + "FOREIGN KEY (Episode) REFERENCES Episode(id) ON DELETE CASCADE,"
                 + "FOREIGN KEY (Classroom) REFERENCES Classroom(id) ON DELETE CASCADE,"
                 + "UNIQUE (Episode, Code, Name)"

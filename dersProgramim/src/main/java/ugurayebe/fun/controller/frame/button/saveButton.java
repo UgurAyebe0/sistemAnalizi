@@ -35,20 +35,27 @@ public class saveButton {
                 // Burada field içindeki verileri fieldData Kayıt ediyoruz.
                 ArrayList fieldData = new ArrayList<>();
 
-                String fiel = (String) fieldNames.get(1);
-                System.out.println("fiel      " + fiel);
-                if (frameType.equals("teacherCourses") && fiel.equals("Code")) {
-                    fieldData.add("Code");
-                }
-
 
                 for (TextFieldEntry textFieldEntry : textFieldEntries) {
                     String value = textFieldEntry.getTextField().getText();
                     fieldData.add(value);
+                    System.out.println("KAYIT: " + value);
                 }
+
                 for (ComboBoxEntry comboBoxEntry : comboBoxEntries) {
                     String value = comboBoxEntry.getComboBox().getSelectedItem().toString();
+
+                    if (frameType.equals("teacherCourses") && value.startsWith("(")){
+                        String[] slot = value.split(" ", 2);
+                        fieldData.add(fieldData.get(0));
+                        fieldData.set(0,slot[0].substring(1,slot[0].length()-1));
+                        System.out.println("KAYIT: " + slot[0].substring(0,slot[0].length()));
+                        fieldData.add(slot[1]);
+                        System.out.println("KAYIT....: " + slot[1]);
+                        continue;
+                    }
                     fieldData.add(value);
+                    System.out.println("KAYIT: " + value);
                 }
 
                 System.out.println("Save fieldData " + fieldData);

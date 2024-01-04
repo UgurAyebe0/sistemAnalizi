@@ -1,6 +1,7 @@
 package ugurayebe.fun.view;
 
 import ugurayebe.fun.controller.frame.createFrame;
+import ugurayebe.fun.view.Days.lessonSettings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +59,7 @@ public class opMenu {
                 fieldName.add("Username");
                 fieldName.add("Password");
                 createFrame.main("Ünvan İşlemleri", 800, 600, fieldName,
-                        4, "Teacher", "Select * from Teacher");
+                        4, "Teacher", "Select * from Teacher Where username= 'enginucar' ORDER BY username");
 
             }
         });
@@ -74,7 +75,7 @@ public class opMenu {
                 fieldName.add("jComboBoxDay");
                 fieldName.add("Reason");
                 createFrame.main("Öğretmen Müsait Olmadiği Günler", 800, 600, fieldName,
-                        2, "availabilityTeacher", "Select * from availabilityTeacher");
+                        2, "availabilityTeacher", "Select * from availabilityTeacher ORDER BY teacher");
 
             }
         });
@@ -87,8 +88,8 @@ public class opMenu {
                 frame.dispose();
                 ArrayList fieldName = new ArrayList();
                 fieldName.add("Name");
-                createFrame.main("Bölüm işlemleri", 800, 600, fieldName,
-                        1, "Episode", "Select * from Episode");
+                createFrame.main("Bölüm işlemleri", 500, 600, fieldName,
+                        1, "Episode", "Select * from Episode ORDER BY Name");
 
             }
         });
@@ -104,7 +105,7 @@ public class opMenu {
                 fieldName.add("Capacity");
                 fieldName.add("Custom");
                 createFrame.main("Derslik işlemleri", 800, 600, fieldName,
-                        2, "Classroom", "Select * from Classroom");
+                        2, "Classroom", "Select * from Classroom ORDER BY Type");
 
             }
         });
@@ -120,8 +121,9 @@ public class opMenu {
                 fieldName.add("Code");
                 fieldName.add("Name");
                 fieldName.add("Time");
+                fieldName.add("Student");
                 createFrame.main("Derslik işlemleri", 800, 600, fieldName,
-                        3, "Lesson", "Select * from Lesson");
+                        3, "Lesson", "Select * from Lesson ORDER BY Episode");
 
             }
         });
@@ -137,32 +139,35 @@ public class opMenu {
                 fieldName.add("Code");
                 fieldName.add("jComboBoxLesson");
                 createFrame.main("Derslik işlemleri", 800, 600, fieldName,
-                        1, "teacherCourses", "Select id,Teacher,Code,Lesson from teacherCourses");
+                        1, "teacherCourses", "Select id,Teacher,Code,Lesson from teacherCourses ORDER BY Teacher");
 
             }
         });
         opPanel.add(teachercoursesButton);
 
 
+        JButton daysButton = new JButton("Gün İşlemleri");
+        daysButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                ArrayList fieldName = new ArrayList();
+                fieldName.add("Day");
+                createFrame.main("Okulun Aktif Günleri işlemleri", 500, 600, fieldName,
+                        1, "Days", "Select * from Days ORDER BY Day");
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//        JButton timeButton = new JButton("Okulun Zaman İşlemleri");
-//        timeButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                frame.dispose();
-//                daysControl.main();
-//                Days.main();
-//            }
-//        });
-//        opPanel.add(timeButton);
+            }
+        });
+        opPanel.add(daysButton);
+
+        JButton timeButton = new JButton("Zaman İşlemleri");
+        timeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                lessonSettings.main();
+            }
+        });
+        opPanel.add(timeButton);
+
 //
 //
 //        JButton episodeProgramButton = new JButton("Bölüm Programı");

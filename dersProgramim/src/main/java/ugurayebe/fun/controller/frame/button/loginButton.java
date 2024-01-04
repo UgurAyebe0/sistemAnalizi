@@ -1,8 +1,7 @@
 package ugurayebe.fun.controller.frame.button;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import ugurayebe.fun.listener.showMessage;
 import ugurayebe.fun.view.opMenu;
 

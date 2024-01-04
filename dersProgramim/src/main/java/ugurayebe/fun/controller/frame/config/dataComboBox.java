@@ -29,10 +29,11 @@ public class dataComboBox {
         }
     }
 
-    private static void handleComboBoxField(String fieldName, String value, ArrayList<Object> fieldData, int index) {
+    private static void handleComboBoxField(String fieldName, String value, ArrayList fieldData, int index) {
         String columnName;
         String whereName;
 
+        System.out.println("fieldData " + fieldData);
         switch (fieldName) {
             case "jComboBoxTitle":
             case "jComboBoxClassroom":
@@ -55,7 +56,9 @@ public class dataComboBox {
         }
 
         String sql = "SELECT id FROM " + columnName + " WHERE " + whereName + " = '" + value + "'";
+        System.out.println(sql);
         int result = jdbcTemplate.queryForObject(sql, Integer.class);
+        System.out.println("22222");
         fieldData.set(index, result);
     }
 

@@ -13,5 +13,6 @@ public class notExits {
         classroom.main();
         lesson.main();
         teacherCourses.main();
+        times.main();
     }
 }
