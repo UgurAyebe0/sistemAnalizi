@@ -14,5 +14,7 @@ public class notExits {
         lesson.main();
         teacherCourses.main();
         times.main();
+        episodeCourses.main();
+        academicProgram.main();
     }
 }

@@ -4,6 +4,7 @@ import ugurayebe.fun.listener.showMessage;
 
 import java.util.ArrayList;
 
+import static ugurayebe.fun.controller.frame.button.updateButton.alertMesage;
 import static ugurayebe.fun.database.config.jdbcTemplate;
 
 public class validData {
@@ -13,7 +14,6 @@ public class validData {
 
             String label = (String) fieldData.get(i);
             String field = (String) fieldOrder.get(i);
-            System.out.println(frameType + " " + field);
 
             if (label.isEmpty() && !field.startsWith("jC")) {
                 showMessage.main(field + " cannot be left blank.");
@@ -84,73 +84,73 @@ public class validData {
                         break;
                 }
             }
+        }
 
 
+        System.out.println("fieldData " + fieldData);
+        System.out.println("fieldOrder " + fieldOrder);
 
+        if (frameType.equals("academic_program") && update) {
 
+            Object Episode = fieldData.get(2); // Bilgisayar 1
+            String sqlEpisode = "SELECT id FROM Episode WHERE Name = '" + Episode + "'";
+            int intEpisode = jdbcTemplate.queryForObject(sqlEpisode, Integer.class);
 
-//
-//            String control = process + field;
-//            System.out.println(control);
-//            if (update) {
-//                switch (control) {
-//                    case "TeachersTC":
-//                    case "TeachersPhoneNumber":
-//                        if (label.length() != 11) {
-//                            showMessage("The " + field + " must be 11 letters long. (" + label.length() + " )");
-//                            return false;
-//                        } else if (isDuplicated(field, process, label, İd)) {
-//                            showMessage("This " + field + " is already in use.");
-//                            return false;
-//                        } else if (!containsNumericalDigit(label)) {
-//                            showMessage(field + " Please enter only numbers.");
-//                            return false;
-//                        }
-//                        break;
-//                    case "teacher_availabilityUsername", "ClassroomsName", "TeachersUsername", "TitlesTitle":
-//                        if (isDuplicated(field, process, label, İd)) {
-//                            showMessage("This " + field + " is already in use.");
-//                            return false;
-//                        }
-//                        break;
-//                }
-//            } else {
-//                switch (control) {
-//                    case "TeachersTC", "TeachersPhoneNumber":
-//                        if (label.length() != 11) {
-//                            showMessage("The " + field + " must be 11 letters long. (" + label.length() + " )");
-//                            return false;
-//                        } else if (isDuplicated(field, process, label)) {
-//                            showMessage("This " + field + " is already in use.");
-//                            return false;
-//                        }
-//                        break;
-//                    case "teacher_availabilityUsername", "ClassroomsName", "TitlesTitle":
-//                        if (isDuplicated(field, process, label)) {
-//                            showMessage("This " + field + " is already in use.");
-//                            return false;
-//                        }
-//                        break;
-//                }
-//            }
+            Object Teacher = fieldData.get(4); // enginucar
+            String sqlTeacher = "SELECT id FROM Teacher WHERE Username = '" + Teacher + "'";
+            int intTeacher = jdbcTemplate.queryForObject(sqlTeacher, Integer.class);
 
+            Object Day = fieldData.get(5); // Cuma
+            Object LessonTime = fieldData.get(6); // 4
 
-//            if (process.equals("teacher_courses")) {
-//                String sqlTeachers = "SELECT * FROM teachers WHERE username = ?";
-//                String resulData = returnİd(sqlTeachers, (String) fieldData.get(i), "İd");
-//                String sqlLesson = "SELECT * FROM lessons WHERE Name = ?";
-//                String resulData2 = returnİd(sqlLesson, (String) fieldData.get(i + 1), "İd");
-//                String sql = "SELECT COUNT(*) FROM teacher_courses where Teachers = " + resulData + " And lesson = " + resulData2; //  855
-//                int ClassromAvailables = getRowCount(sql);
-//                if (ClassromAvailables == 0) {
-//                    return true;
-//                } else {
-//                    showMessage("The user " + fieldData.get(i) + " has already been assigned a " + fieldData.get(i + 1) + " course.");
-//                    return false;
-//                }
-//            }
-//
+            Object Classroom = fieldData.get(7); // Amfi
+            Object Classroom_Number = fieldData.get(1); // 2222
 
+            String sqlEpisodeAvailables = "SELECT COUNT(*) FROM academic_program" +
+                    " WHERE Episode = ? AND Day = ?" +
+                    " AND LessonTime = ? AND id != ?";
+
+            int availablesEpisode = jdbcTemplate.queryForObject(
+                    sqlEpisodeAvailables,
+                    new Object[]{intEpisode, Day, LessonTime, id},
+                    Integer.class
+            );
+
+            String sqlTeacherAvailables = "SELECT COUNT(*) FROM academic_program" +
+                    " WHERE Teacher = ? AND Day = ?" +
+                    " AND LessonTime = ? AND id != ?";
+
+            int availablesTeacher = jdbcTemplate.queryForObject(
+                    sqlTeacherAvailables,
+                    new Object[]{intTeacher, Day, LessonTime, id},
+                    Integer.class
+            );
+
+            String sqlRoomAvailables = "SELECT COUNT(*) FROM academic_program" +
+                    " WHERE Classroom = ? AND Classroom_Number = ? AND Day = ?" +
+                    " AND LessonTime = ? AND id != ?";
+
+            int availablesRoom = jdbcTemplate.queryForObject(
+                    sqlRoomAvailables,
+                    new Object[]{Classroom,Classroom_Number, Day, LessonTime, id},
+                    Integer.class
+            );
+
+            System.out.println("availablesRoom " + availablesRoom  + " availablesTeacher " + availablesTeacher
+                               + " availablesEpisode " + availablesEpisode );
+            System.out.println("id " + id);
+            if (availablesEpisode != 0){
+                System.out.println(alertMesage);
+                alertMesage = alertMesage + "Bu bölümün o gün zaten başka bir dersi var (!) \n";
+            }
+            if (availablesTeacher != 0){
+                alertMesage = alertMesage + "Bu öğretmenin o gün zaten başka bir dersi var (!) \n";
+                System.out.println(alertMesage);
+            }
+            if (availablesRoom != 0){
+                System.out.println(alertMesage);
+                alertMesage = alertMesage + "Bu dersliğin o gün zaten başka bir dersi var (!) \n";
+            }
         }
 
 

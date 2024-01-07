@@ -1,6 +1,7 @@
 package ugurayebe.fun.view;
 
 import ugurayebe.fun.controller.frame.createFrame;
+import ugurayebe.fun.controller.program.program;
 import ugurayebe.fun.view.Days.lessonSettings;
 
 import javax.swing.*;
@@ -59,7 +60,7 @@ public class opMenu {
                 fieldName.add("Username");
                 fieldName.add("Password");
                 createFrame.main("Ünvan İşlemleri", 800, 600, fieldName,
-                        4, "Teacher", "Select * from Teacher Where username= 'enginucar' ORDER BY username");
+                        4, "Teacher", "Select * from Teacher ORDER BY username");
 
             }
         });
@@ -116,35 +117,47 @@ public class opMenu {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 ArrayList fieldName = new ArrayList();
-                fieldName.add("jComboBoxEpisode");
                 fieldName.add("jComboBoxClassroom");
                 fieldName.add("Code");
                 fieldName.add("Name");
                 fieldName.add("Time");
                 fieldName.add("Student");
+                fieldName.add("jComboBoxBranch");
                 createFrame.main("Derslik işlemleri", 800, 600, fieldName,
-                        3, "Lesson", "Select * from Lesson ORDER BY Episode");
-
+                        3, "Lesson", "Select * from Lesson ORDER BY Name");
             }
         });
         opPanel.add(lessonButton);
 
 
-        JButton teachercoursesButton = new JButton("Öğretmen Ders Atama");
-        teachercoursesButton.addActionListener(new ActionListener() {
+        JButton teacherCoursesButton = new JButton("Öğretmen Ders Atama");
+        teacherCoursesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 ArrayList fieldName = new ArrayList();
                 fieldName.add("jComboBoxTeacher");
                 fieldName.add("Code");
                 fieldName.add("jComboBoxLesson");
-                createFrame.main("Derslik işlemleri", 800, 600, fieldName,
+                createFrame.main("Öğretmene ders atama", 800, 600, fieldName,
                         1, "teacherCourses", "Select id,Teacher,Code,Lesson from teacherCourses ORDER BY Teacher");
 
             }
         });
-        opPanel.add(teachercoursesButton);
+        opPanel.add(teacherCoursesButton);
 
+        JButton episodeCoursesButton = new JButton("Bölüme Ders Atama");
+        episodeCoursesButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                ArrayList fieldName = new ArrayList();
+                fieldName.add("jComboBoxEpisode");
+                fieldName.add("Code");
+                fieldName.add("jComboBoxLesson");
+                createFrame.main("Bölüme ders atama", 800, 600, fieldName,
+                        1, "episodeCourses", "Select id,Episode,Code,Lesson from episodeCourses ORDER BY Episode");
+            }
+        });
+        opPanel.add(episodeCoursesButton);
 
         JButton daysButton = new JButton("Gün İşlemleri");
         daysButton.addActionListener(new ActionListener() {
@@ -168,20 +181,32 @@ public class opMenu {
         });
         opPanel.add(timeButton);
 
-//
-//
-//        JButton episodeProgramButton = new JButton("Bölüm Programı");
-//        episodeProgramButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                frame.dispose();
-//                String episode = alertGetEpisode();
-//
-//                createFrame.main(episode + "Bölümün Programı", 800, 600,
-//
-//                        new String[]{"jComboBoxEpisode", "jComboBoxLesson", "jComboBoxTeachers", "jComboBoxClassroom", "jComboBoxDay", "jComboBoxLessonTime"}, 3, "academic_program", "", "select * from academic_program where episode ='" + episode + "'");
-//            }
-//        });
-//        opPanel.add(episodeProgramButton);
+
+        JButton episodeProgramButton = new JButton("Bölüm Programı");
+        episodeProgramButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+
+                ArrayList fieldName = new ArrayList();
+                fieldName.add("jComboBoxEpisode");
+                fieldName.add("jComboBoxLessons");
+                fieldName.add("jComboBoxTeacher");
+                fieldName.add("jComboBoxDay");
+                fieldName.add("jComboBoxLessonTime");
+                fieldName.add("jComboBoxClassroom");
+                fieldName.add("Lesson_Code");
+                fieldName.add("Classroom_Number");
+
+
+                createFrame.main("Okulun Aktif Günleri işlemleri", 1000, 600, fieldName,
+                        4, "academic_program",
+                        "Select id,Episode,Lessons,Teacher,Day,LessonTime,Classroom,Lesson_Code,Classroom_Number" +
+                                " from academic_program ORDER BY Episode");
+
+
+            }
+        });
+        opPanel.add(episodeProgramButton);
 //
 //
 //        JButton teacherProgram = new JButton("Öğretmen Programı");
@@ -207,6 +232,13 @@ public class opMenu {
 //                }
 //            }
 //        });
+        JButton denemeButton = new JButton("Programı Tekrar Hazırla");
+        denemeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                program.main();
+            }
+        });
+        opPanel.add(denemeButton);
 
         frame.add(opPanel);
         frame.setVisible(true);

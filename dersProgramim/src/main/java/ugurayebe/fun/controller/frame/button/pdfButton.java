@@ -67,7 +67,7 @@ public class pdfButton {
 
 
                         ArrayList loadArryList = returnListe.main(tabloSql);
-
+                        System.out.println("loadArryList " + loadArryList);
                         int rowCount = 1;
 
                         for (int i = 0; i < loadArryList.size(); i = i + columnList.size()) {

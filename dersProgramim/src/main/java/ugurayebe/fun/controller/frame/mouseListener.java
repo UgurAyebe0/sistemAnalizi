@@ -18,7 +18,9 @@ public class mouseListener {
         public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
                 int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1 && selectedRow < tableModel.getRowCount() && !frameType.equals("teacherCourses")) {
+                if (selectedRow != -1 && selectedRow < tableModel.getRowCount() &&
+                        !frameType.equals("teacherCourses") && !frameType.equals("episodeCourses")
+                        ){
                     for (int i = 0; i < fieldNames.size(); i++) {
                         String data = (String) fieldNames.get(i);
                         if (data.startsWith("jComboBox")) {

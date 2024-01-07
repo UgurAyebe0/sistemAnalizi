@@ -1,6 +1,7 @@
 package ugurayebe.fun.controller.frame.button;
 
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -39,26 +40,25 @@ public class saveButton {
                 for (TextFieldEntry textFieldEntry : textFieldEntries) {
                     String value = textFieldEntry.getTextField().getText();
                     fieldData.add(value);
-                    System.out.println("KAYIT: " + value);
                 }
 
                 for (ComboBoxEntry comboBoxEntry : comboBoxEntries) {
                     String value = comboBoxEntry.getComboBox().getSelectedItem().toString();
 
-                    if (frameType.equals("teacherCourses") && value.startsWith("(")){
+                    System.out.println("value " + value);
+
+                    if ((frameType.equals("teacherCourses") || frameType.equals("episodeCourses")) && value.startsWith("(")) {
                         String[] slot = value.split(" ", 2);
+                        System.out.println(fieldData.get(0));
                         fieldData.add(fieldData.get(0));
-                        fieldData.set(0,slot[0].substring(1,slot[0].length()-1));
-                        System.out.println("KAYIT: " + slot[0].substring(0,slot[0].length()));
+                        fieldData.set(0, slot[0].substring(1, slot[0].length() - 1));
                         fieldData.add(slot[1]);
-                        System.out.println("KAYIT....: " + slot[1]);
                         continue;
                     }
-                    fieldData.add(value);
-                    System.out.println("KAYIT: " + value);
-                }
 
-                System.out.println("Save fieldData " + fieldData);
+
+                    fieldData.add(value);
+                }
                 saveData(fieldData, fieldNames, frameType, tabloSql);
             }
         });
@@ -77,11 +77,30 @@ public class saveButton {
     private static void executeInsertQuery(ArrayList fieldData, ArrayList fieldOrder, String frameType) {
         try {
             String sql = generateInsertQuery(fieldOrder, frameType);
+            System.out.println("SQL Execute: " + sql);
             jdbcTemplate.update(sql, fieldData.toArray());
             showMessage.main("Tabloya veri eklendi.");
         } catch (DuplicateKeyException e) {
             showMessage.main("Bu bilgilere ait zaten bir kayıt var.");
+        } catch (DataIntegrityViolationException e) {
+            // Hata mesajını buraya ekleyin
+            String errorMessage = e.getMessage();
+            String tableName = parseTableNameFromErrorMessage(errorMessage);
+            showMessage.main("Veritabanı hatası: " + tableName);
         }
+    }
+
+    private static String parseTableNameFromErrorMessage(String errorMessage) {
+        // Hata mesajında "`dersprogrami`.`lesson`" ifadesini arayarak tablo adını çıkartıyoruz
+        int startIndexOfTable = errorMessage.indexOf("`");
+        int endIndexOfTable = errorMessage.lastIndexOf("`");
+
+        if (startIndexOfTable != -1 && endIndexOfTable != -1 && endIndexOfTable > startIndexOfTable) {
+            return errorMessage.substring(startIndexOfTable + 1, endIndexOfTable);
+        }
+
+        // Eğer "`" ifadeleri bulunamazsa veya sıraları doğru değilse, varsayılan olarak "unknown_table" döndürüyoruz.
+        return "unknown_table";
     }
 
 
@@ -106,4 +125,5 @@ public class saveButton {
         sqlQuery.append(")");
         return sqlQuery.toString();
     }
+
 }

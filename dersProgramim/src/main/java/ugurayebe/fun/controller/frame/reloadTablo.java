@@ -15,8 +15,6 @@ public class reloadTablo {
         ArrayList columnList = getColumnList.main(fieldNames);
         ArrayList loadArryList = returnListe.main(tabloSql);
 
-        System.out.println("columnList  " + columnList);
-        System.out.println("loadArryList  " + loadArryList);
         tableModel.setRowCount(0);
 
         for (int i = 0; i < loadArryList.size(); i = i + columnList.size()) {

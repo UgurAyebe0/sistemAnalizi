@@ -13,12 +13,6 @@ public class veriables {
     public static tabloModel.CustomTableModel tableModel;
     public static JTable table;
 
-    public static DefaultListModel<String>  addDaysListModel = new  DefaultListModel<>();
-    public static DefaultListModel<String> removeDaysListModel = new DefaultListModel<>();
-
-    public static JList<String> unSelectDays;
-    public static JList<String> selectDays;
-
 
     public static int lessonStartHours;
     public static int lessonMinutesHours;

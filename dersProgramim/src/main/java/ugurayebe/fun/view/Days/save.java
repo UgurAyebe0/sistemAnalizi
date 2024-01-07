@@ -45,7 +45,6 @@ public class save {
             }
 
             if (start == lessonFinishHours * 60 + lessonFinishMinutes) {
-                System.out.println("Okul Bitti");
                 break;
             }
         }

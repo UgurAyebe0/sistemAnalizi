@@ -38,7 +38,7 @@ public class createFrame {
 
         for (Object field : fieldNames) {
             String fieldName = (String) field;
-            if (frameType.equals("teacherCourses") && fieldName.equals("Code")) {
+            if ((frameType.equals("episodeCourses") || frameType.equals("teacherCourses")) && fieldName.equals("Code")) {
 
             } else if (fieldName.startsWith("jComboBox")) {
                 String methodName = fieldName.substring(9);
@@ -55,7 +55,8 @@ public class createFrame {
                 panel.add(textField);
             }
         }
-        if (fieldNames.size() == 3 && !frameType.equals("teacherCourses")) {
+
+        if (fieldNames.size() == 3 && !frameType.equals("teacherCourses") && !frameType.equals("episodeCourses")) {
             panel.add(new JLabel(" "));
         }
 
@@ -75,7 +76,8 @@ public class createFrame {
             JButton pdfButton = pdfButton(fieldNames, frameType, tabloSql);
             buttonPanel.add(pdfButton);
 
-            if (!frameType.equals("teacherCourses") && !frameType.equals("Days")) {
+
+            if (!frameType.equals("episodeCourses") && !frameType.equals("teacherCourses") && !frameType.equals("Days")) {
                 JButton updateButton = updateButton(fieldNames, frameType, tabloSql);
                 buttonPanel.add(updateButton);
             }

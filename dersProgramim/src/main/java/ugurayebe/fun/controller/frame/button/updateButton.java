@@ -51,9 +51,10 @@ public class updateButton {
     }
 
     private static void saveData(ArrayList fieldData, ArrayList fieldNames, String frameType, Object memberİd, String tabloSql) {
+        alertMesage = " ";
         ArrayList<String> fieldOrder = getFieldOrder(fieldNames);
         if (valid(fieldData, fieldOrder, frameType, memberİd, true)) {
-            if (showAlerty(fieldData, fieldNames)) {
+            if (showAlerty(fieldData, fieldNames, frameType)) {
                 dataComboBox.main(fieldData, fieldOrder);
                 executeInsertQuery(fieldData, fieldOrder, frameType, memberİd);
                 reload(fieldNames, tabloSql);
@@ -63,10 +64,11 @@ public class updateButton {
 
     }
 
-    private static boolean showAlerty(ArrayList<Object> fieldData, ArrayList fieldNames) {
+    public static String alertMesage;
 
+    private static boolean showAlerty(ArrayList<Object> fieldData, ArrayList fieldNames, String frameType) {
         int selectedRow = table.getSelectedRow();
-        String alertMesage = "Yapılacak değişiklikleri onaylıyor musunuz ?\n\n Asıl veriler:";
+        alertMesage = alertMesage + "Yapılacak değişiklikleri onaylıyor musunuz ?\n\n Asıl veriler:";
         int sayaç = 0;
 
         for (int i = 0; i < fieldNames.size(); i++) {
@@ -81,22 +83,29 @@ public class updateButton {
         }
         alertMesage = alertMesage + "\n\n Güncellenecek veriler:";
         int c = sayaç;
+
         for (int i = 0; i < fieldNames.size(); i++) {
             String field = (String) fieldNames.get(i);
             if (field.startsWith("jC")) {
                 alertMesage = alertMesage + "\n" + field.substring(9) + ": " + fieldData.get(fieldNames.size() - sayaç);
                 sayaç--;
             } else {
-                alertMesage = alertMesage + "\n" + field + ": " + fieldData.get(i - c);
+                if (!frameType.equals("Lesson")) {
+                    alertMesage = alertMesage + "\n" + field + ": " + fieldData.get(i - c);
+                } else {
+                    alertMesage = alertMesage + "\n" + field + ": " + fieldData.get(i);
+                }
             }
         }
+
+
         int result = JOptionPane.showConfirmDialog(null, alertMesage, "Onay", JOptionPane.OK_CANCEL_OPTION);
 
         boolean confirmed = false;
         if (result == JOptionPane.OK_OPTION) {
             confirmed = true;
         }
-        return true;
+        return confirmed;
     }
 
 
