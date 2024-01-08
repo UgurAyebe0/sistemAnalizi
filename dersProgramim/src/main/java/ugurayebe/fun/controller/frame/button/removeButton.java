@@ -18,9 +18,13 @@ public class removeButton {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String sql = "DELETE FROM " + process + " WHERE id = ?";
+
+
+
+                String sql = "DELETE FROM " + deneme(process) + " WHERE id = ?";
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
+
                     int id = Integer.parseInt(tableModel.getValueAt(selectedRow, 0).toString());
                     jdbcTemplate.update(sql, id);
                     showMessage.main("Veri tablodan silindi.");
@@ -31,5 +35,12 @@ public class removeButton {
             }
         });
         return button;
+    }
+    public static String deneme (String Process){
+
+        if (Process.equals("academic_program_episode") || Process.equals("academic_program_teacher")){
+            Process = "academic_program" ;
+        }
+        return Process;
     }
 }

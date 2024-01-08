@@ -32,7 +32,13 @@ public class opMenu {
 
         opPanel = new JPanel(new GridLayout(14, 1));
 
-        // Burada bütün menülerimizi CreateFrame methodundan çağırıyoruz.
+        // Burada bütün menülerimizi CreateFrame methodundan çağırıyoruz. Oluşturduğumuz frameName arrylisti içeride çözümlenecek.
+        // Eğer jComboBox ise bu veri jComboBox cıkarılıp label olacak + ComboBox olacak eğer JComboBox ile başlamıyorsa
+        // Düz label + Field olarak eklenecektir. FrameName ise ekranda acılan menü sol üst ismini belirteceğiz.
+        // FrameSizeX ile Genişliğini FrameSizeY ile yüksekliğini ve rows ise  kaç stün olacağını (Label ve field'lerin)
+        // FrameType tablo adını yazacağız ve tabloSql'de listelenecek öğeleri yazcaz.
+
+        // Bu şekilde otomatik pencere oluşturabiliriz.
 
         JButton titleButton = new JButton("Ünvanlar");
         titleButton.addActionListener(new ActionListener() {
@@ -141,6 +147,22 @@ public class opMenu {
                 fieldName.add("Code");
                 fieldName.add("jComboBoxLesson");
                 createFrame.main("Öğretmene ders atama", 800, 600, fieldName,
+                        1, "teacherCourses", "Select id,Teacher,Code,Lesson from teacherCourses ORDER BY Teacher");
+
+            }
+        });
+        opPanel.add(lessonButton);
+
+
+        JButton akııff = new JButton("8-ocakçıktı");
+        teacherCoursesButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                ArrayList fieldName = new ArrayList();
+                fieldName.add("jComboBoxTeacher");
+                fieldName.add("Code");
+                fieldName.add("jComboBoxLesson");
+                createFrame.main("8-ocakçıktı", 800, 600, fieldName,
                         1, "teacherCourses", "Select id,Teacher,Code,Lesson from teacherCourses ORDER BY Teacher");
 
             }

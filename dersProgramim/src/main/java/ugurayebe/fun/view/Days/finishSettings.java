@@ -11,6 +11,7 @@ import static ugurayebe.fun.view.Days.button.finishNextButton;
 
 public class finishSettings {
 
+    // Öğlen molasını ve öğlen mola saat başlangıcı için acılan menu
     public static void main() {
         frame = new JFrame("Yönetici | Ders bitişi ayarlama");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,6 +33,8 @@ public class finishSettings {
     }
 
 
+
+    // Burada ise ders saatleri, ders başlangıç saatini alıp olabilecek öğlen molası saatlerini hesaplıyoruz.
     private static String[] numbers(int hours, int minutes, int lesson, int recess) {
         ArrayList<String> number = new ArrayList<>();
         int işlem = 0;

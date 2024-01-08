@@ -22,7 +22,7 @@ import static ugurayebe.fun.controller.frame.reloadTablo.reload;
 
 public class pdfButton {
     public static JButton pdfButton(ArrayList fieldNames, String frameType, String tabloSql) {
-        JButton button = new JButton("Cıktı Al");
+        JButton button = new JButton("8-ocak");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -46,7 +46,7 @@ public class lessonSettings {
     }
 
 
-    // Burada random sayı üretip combobaxa yolladım.
+      // Bu methodda saatsel verileri comboBoxtan alacağız. 01 02 03 diye diye....
     private static String[] numbers(int start, int end) {
         ArrayList<String> number = new ArrayList<>();
         for (int i = start; i <= end; i++) {

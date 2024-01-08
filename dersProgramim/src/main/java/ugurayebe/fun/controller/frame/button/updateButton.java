@@ -50,6 +50,10 @@ public class updateButton {
         return button;
     }
 
+
+
+
+
     private static void saveData(ArrayList fieldData, ArrayList fieldNames, String frameType, Object memberİd, String tabloSql) {
         alertMesage = " ";
         ArrayList<String> fieldOrder = getFieldOrder(fieldNames);
