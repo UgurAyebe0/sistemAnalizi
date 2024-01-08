@@ -96,27 +96,43 @@ public class nodeLesson {
         String classroomName = "SELECT Type FROM classroom WHERE id = ?";
 
 
+        String Classroom = " ";
+        String Code = " ";
+        String Lesson = " ";
+        String Time = " ";
+        String Student = " ";
+        String Branch = " ";
+        String Capacity = " ";
+        String Custom = " ";
+        String Type = " ";
+
+        ArrayList<Integer> episode = new ArrayList<>();
+        ArrayList<Integer> teacher = new ArrayList<>();
+
+        Object ide = 1;
         for (Object id : lessons) {
 
 
-            String Classroom = jdbcTemplate.queryForObject(lessonClassroom, String.class, id);
-            String Code = jdbcTemplate.queryForObject(lessonCode, String.class, id);
-            String Lesson = jdbcTemplate.queryForObject(lessonName, String.class, id);
-            String Time = jdbcTemplate.queryForObject(lessonTime, String.class, id);
-            String Student = jdbcTemplate.queryForObject(lessonStudent, String.class, id);
-            String Branch = jdbcTemplate.queryForObject(lessonBranch, String.class, id);
+             Classroom = jdbcTemplate.queryForObject(lessonClassroom, String.class, id);
+             Code = jdbcTemplate.queryForObject(lessonCode, String.class, id);
+             Lesson = jdbcTemplate.queryForObject(lessonName, String.class, id);
+             Time = jdbcTemplate.queryForObject(lessonTime, String.class, id);
+             Student = jdbcTemplate.queryForObject(lessonStudent, String.class, id);
+             Branch = jdbcTemplate.queryForObject(lessonBranch, String.class, id);
 
 
-            String Capacity = jdbcTemplate.queryForObject(classroomCapacity, String.class, Classroom);
-            String Custom = jdbcTemplate.queryForObject(classroomCustom, String.class, Classroom);
-            String Type = jdbcTemplate.queryForObject(classroomName, String.class, Classroom);
+             Capacity = jdbcTemplate.queryForObject(classroomCapacity, String.class, Classroom);
+             Custom = jdbcTemplate.queryForObject(classroomCustom, String.class, Classroom);
+             Type = jdbcTemplate.queryForObject(classroomName, String.class, Classroom);
 
+             episode = (ArrayList<Integer>) jdbcTemplate.queryForList(lessonTeacher, Integer.class, id);
+             teacher = (ArrayList<Integer>) jdbcTemplate.queryForList(lessonEpisode, Integer.class, id);
 
-            ArrayList<Integer> episode = (ArrayList<Integer>) jdbcTemplate.queryForList(lessonTeacher, Integer.class, id);
-            ArrayList<Integer> teacher = (ArrayList<Integer>) jdbcTemplate.queryForList(lessonEpisode, Integer.class, id);
-
+            ide =id;
             addNodeList(Lesson,id, Classroom, Type, Capacity, Custom, Code, Time, Student, Branch, episode, teacher);
         }
+        addNodeList(Lesson,ide, Classroom, Type, Capacity, Custom, Code, Time, Student, Branch, episode, teacher);
+
     }
 
 

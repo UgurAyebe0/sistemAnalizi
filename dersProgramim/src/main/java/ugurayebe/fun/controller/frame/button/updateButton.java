@@ -121,6 +121,11 @@ public class updateButton {
     }
 
     private static String generateInsertQuery(ArrayList<String> fieldOrder, String frameType) {
+
+        if (frameType.equals("academic_program_episode") || frameType.equals("academic_program_teacher")){
+            frameType = "academic_program" ;
+        }
+
         StringBuilder sqlQuery = new StringBuilder("UPDATE " + frameType + " SET ");
         for (String fieldName : fieldOrder) {
             if (!fieldName.startsWith("jComboBox")) {

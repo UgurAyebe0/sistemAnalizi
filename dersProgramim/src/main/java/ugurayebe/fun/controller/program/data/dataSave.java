@@ -8,7 +8,7 @@ public class dataSave {
                                            Object Teacher, Object Classroom, Object Classroom_Number,
                                            Object Day, Object LessonTime){
 
-        String sql = "INSERT INTO academic_program (Episode, Lesson, Lesson_Code, Teacher, Classroom, Classroom_Number, Day, LessonTime)" +
+        String sql = "INSERT INTO academic_program (Episode, Lessons, Lesson_Code, Teacher, Classroom, Classroom_Number, Day, LessonTime)" +
                 " VALUES (?,?,?,?,?,?,?,?)";
 
         jdbcTemplate.update(sql, Episode,Lesson,Lesson_Code,Teacher,Classroom,Classroom_Number,Day,LessonTime);

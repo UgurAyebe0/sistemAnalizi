@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static ugurayebe.fun.listener.alert.getEpisode.getEpisode;
+import static ugurayebe.fun.listener.alert.getTeacher.getTeachers;
 import static ugurayebe.fun.listener.veriables.*;
 
 
@@ -28,7 +30,7 @@ public class opMenu {
         frame.setSize(250, 450);
         frame.setLocationRelativeTo(null);
 
-        opPanel = new JPanel(new GridLayout(12, 1));
+        opPanel = new JPanel(new GridLayout(14, 1));
 
         // Burada bütün menülerimizi CreateFrame methodundan çağırıyoruz.
 
@@ -182,8 +184,8 @@ public class opMenu {
         opPanel.add(timeButton);
 
 
-        JButton episodeProgramButton = new JButton("Bölüm Programı");
-        episodeProgramButton.addActionListener(new ActionListener() {
+        JButton allProgramButton = new JButton("Bütün Program");
+        allProgramButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
 
@@ -197,41 +199,33 @@ public class opMenu {
                 fieldName.add("Lesson_Code");
                 fieldName.add("Classroom_Number");
 
-
                 createFrame.main("Okulun Aktif Günleri işlemleri", 1000, 600, fieldName,
                         4, "academic_program",
                         "Select id,Episode,Lessons,Teacher,Day,LessonTime,Classroom,Lesson_Code,Classroom_Number" +
                                 " from academic_program ORDER BY Episode");
+            }
+        });
+        opPanel.add(allProgramButton);
 
+        JButton teacherProgramButton = new JButton("Öğretmen Programı");
+        teacherProgramButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                getTeachers();
+            }
+        });
+        opPanel.add(teacherProgramButton);
 
+        JButton episodeProgramButton = new JButton("Bölüm Program");
+        episodeProgramButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                getEpisode();
             }
         });
         opPanel.add(episodeProgramButton);
-//
-//
-//        JButton teacherProgram = new JButton("Öğretmen Programı");
-//        teacherProgram.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                frame.dispose();
-//                String teachers = alertGetTeachers();
-//                createFrame.main(teachers + "Öğretmenin Programı", 800, 600,
-//
-//                        new String[]{"jComboBoxEpisode", "jComboBoxLesson", "jComboBoxTeachers", "jComboBoxClassroom", "jComboBoxDay", "jComboBoxLessonTime"}, 3, "academic_program", "", "select * from academic_program where teachers ='" + teachers + "'");
-//            }
-//        });
-//        opPanel.add(teacherProgram);
-//
-//        JButton opMenu2 = new JButton("Ders Programini Sıfırla");
-//        opMenu2.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//
-//                int option = JOptionPane.showConfirmDialog(null, "Ders programının sıfırlanıp yeniden \n hazırlanmasını onaylıyor musunuz =?", "Onay", JOptionPane.YES_NO_OPTION);
-//                if (option == JOptionPane.YES_OPTION) {
-//                    Setup.main();
-//                    Start.main();
-//                }
-//            }
-//        });
+
+
         JButton denemeButton = new JButton("Programı Tekrar Hazırla");
         denemeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

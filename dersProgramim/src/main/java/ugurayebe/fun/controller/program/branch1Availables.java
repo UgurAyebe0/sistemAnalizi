@@ -4,7 +4,7 @@ package ugurayebe.fun.controller.program;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static ugurayebe.fun.controller.program.alert.notClassroom.classroomAlert;
+import static ugurayebe.fun.listener.alert.notClassroom.classroomAlert;
 import static ugurayebe.fun.controller.program.data.dataGet.getNodeClassroom;
 import static ugurayebe.fun.database.config.jdbcTemplate;
 

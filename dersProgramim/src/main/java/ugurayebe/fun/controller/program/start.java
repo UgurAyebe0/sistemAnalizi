@@ -1,12 +1,11 @@
 package ugurayebe.fun.controller.program;
 
-import ugurayebe.fun.controller.program.alert.notTeacher;
 import ugurayebe.fun.controller.program.node.nodeLesson;
 import ugurayebe.fun.listener.showMessage;
 
 import java.util.ArrayList;
 
-import static ugurayebe.fun.controller.program.alert.notTeacher.teacherAlert;
+import static ugurayebe.fun.listener.alert.notTeacher.teacherAlert;
 import static ugurayebe.fun.controller.program.branch2Availables.getTeacherAvailables2;
 import static ugurayebe.fun.controller.program.data.dataGet.*;
 import static ugurayebe.fun.controller.program.data.dataSave.sendAcademicProgram;

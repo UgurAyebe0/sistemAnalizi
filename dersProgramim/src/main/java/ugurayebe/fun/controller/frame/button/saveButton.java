@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static ugurayebe.fun.controller.frame.button.updateButton.alertMesage;
 import static ugurayebe.fun.controller.frame.getFieldOrder.getFieldOrder;
 import static ugurayebe.fun.controller.frame.reloadTablo.reload;
 import static ugurayebe.fun.controller.frame.validData.valid;
@@ -68,6 +69,7 @@ public class saveButton {
     private static void saveData(ArrayList fieldData, ArrayList fieldNames, String frameType, String tabloSql) {
         ArrayList fieldOrder = getFieldOrder(fieldNames);
         if (valid(fieldData, fieldOrder, frameType, 0, false)) {
+            alertMesage = " ";
             dataComboBox.main(fieldData, fieldOrder);
             executeInsertQuery(fieldData, fieldOrder, frameType);
             reload(fieldNames, tabloSql);
@@ -105,6 +107,11 @@ public class saveButton {
 
 
     private static String generateInsertQuery(ArrayList<String> fieldOrder, String process) {
+
+        if (process.equals("academic_program_episode") || process.equals("academic_program_teacher")){
+            process = "academic_program" ;
+        }
+
         StringBuilder sqlQuery = new StringBuilder("INSERT INTO " + process + "(");
         for (String fieldName : fieldOrder) {
             if (!fieldName.startsWith("jComboBox")) {

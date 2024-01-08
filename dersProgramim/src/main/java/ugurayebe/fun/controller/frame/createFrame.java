@@ -18,6 +18,7 @@ import static ugurayebe.fun.controller.frame.button.pdfButton.pdfButton;
 import static ugurayebe.fun.controller.frame.button.removeButton.removeButton;
 import static ugurayebe.fun.controller.frame.button.saveButton.saveButton;
 import static ugurayebe.fun.controller.frame.button.updateButton.updateButton;
+import static ugurayebe.fun.controller.frame.button.excelCKT.excelCKT;
 import static ugurayebe.fun.controller.frame.config.comboBox.genereted;
 import static ugurayebe.fun.controller.frame.mouseListener.addMouseListenerToTable;
 import static ugurayebe.fun.controller.frame.reloadTablo.reload;
@@ -72,6 +73,11 @@ public class createFrame {
             frame.add(panel);
         } else {
 
+            if (frameType.equals("academic_program_episode") || frameType.equals("academic_program_teacher")){
+
+                JButton excelCKT = excelCKT(frameType,frameName);
+                buttonPanel.add(excelCKT);
+            }
 
             JButton pdfButton = pdfButton(fieldNames, frameType, tabloSql);
             buttonPanel.add(pdfButton);
@@ -81,6 +87,8 @@ public class createFrame {
                 JButton updateButton = updateButton(fieldNames, frameType, tabloSql);
                 buttonPanel.add(updateButton);
             }
+
+
 
             JButton saveButton = saveButton(fieldNames, frameType, tabloSql);
             buttonPanel.add(saveButton);

@@ -7,7 +7,7 @@ public class academicProgram {
         String sql = "CREATE TABLE IF NOT EXISTS Academic_program ("
                 + "Id INT AUTO_INCREMENT PRIMARY KEY,"
                 + "Episode INT NOT NULL,"
-                + "Lesson INT NOT NULL,"
+                + "Lessons INT NOT NULL,"
                 + "Lesson_Code VARCHAR(255) NOT NULL,"
                 + "Teacher INT NOT NULL,"
                 + "Classroom INT NOT NULL,"

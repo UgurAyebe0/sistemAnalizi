@@ -2,6 +2,7 @@ package ugurayebe.fun.controller.frame;
 
 import ugurayebe.fun.listener.showMessage;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 import static ugurayebe.fun.controller.frame.button.updateButton.alertMesage;
@@ -90,7 +91,8 @@ public class validData {
         System.out.println("fieldData " + fieldData);
         System.out.println("fieldOrder " + fieldOrder);
 
-        if (frameType.equals("academic_program") && update) {
+
+        if (frameType.startsWith("academic_program") && update) {
 
             Object Episode = fieldData.get(2); // Bilgisayar 1
             String sqlEpisode = "SELECT id FROM Episode WHERE Name = '" + Episode + "'";
@@ -105,6 +107,8 @@ public class validData {
 
             Object Classroom = fieldData.get(7); // Amfi
             Object Classroom_Number = fieldData.get(1); // 2222
+            String sqlClassroom = "SELECT id FROM Classroom WHERE Type = '" + Classroom + "'";
+            int intClassroom = jdbcTemplate.queryForObject(sqlClassroom, Integer.class);
 
             String sqlEpisodeAvailables = "SELECT COUNT(*) FROM academic_program" +
                     " WHERE Episode = ? AND Day = ?" +
@@ -132,7 +136,7 @@ public class validData {
 
             int availablesRoom = jdbcTemplate.queryForObject(
                     sqlRoomAvailables,
-                    new Object[]{Classroom,Classroom_Number, Day, LessonTime, id},
+                    new Object[]{intClassroom,Classroom_Number, Day, LessonTime, id},
                     Integer.class
             );
 
@@ -154,6 +158,86 @@ public class validData {
         }
 
 
+        if (frameType.startsWith("academic_program") && !update) {
+
+            Object Episode = fieldData.get(2); // Bilgisayar 1
+            String sqlEpisode = "SELECT id FROM Episode WHERE Name = '" + Episode + "'";
+            int intEpisode = jdbcTemplate.queryForObject(sqlEpisode, Integer.class);
+
+            Object Teacher = fieldData.get(4); // enginucar
+            String sqlTeacher = "SELECT id FROM Teacher WHERE Username = '" + Teacher + "'";
+            int intTeacher = jdbcTemplate.queryForObject(sqlTeacher, Integer.class);
+
+            Object Day = fieldData.get(5); // Cuma
+            Object LessonTime = fieldData.get(6); // 4
+
+            Object Classroom = fieldData.get(7); // Amfi
+            String sqlClassroom = "SELECT id FROM Classroom WHERE Type = '" + Classroom + "'";
+            int intClassroom = jdbcTemplate.queryForObject(sqlClassroom, Integer.class);
+
+            Object Classroom_Number = fieldData.get(1); // 2222
+
+            String sqlEpisodeAvailables = "SELECT COUNT(*) FROM academic_program" +
+                    " WHERE Episode = ? AND Day = ?" +
+                    " AND LessonTime = ?";
+
+            int availablesEpisode = jdbcTemplate.queryForObject(
+                    sqlEpisodeAvailables,
+                    new Object[]{intEpisode, Day, LessonTime},
+                    Integer.class
+            );
+
+            String sqlTeacherAvailables = "SELECT COUNT(*) FROM academic_program" +
+                    " WHERE Teacher = ? AND Day = ?" +
+                    " AND LessonTime = ?";
+
+            int availablesTeacher = jdbcTemplate.queryForObject(
+                    sqlTeacherAvailables,
+                    new Object[]{intTeacher, Day, LessonTime},
+                    Integer.class
+            );
+
+            String sqlRoomAvailables = "SELECT COUNT(*) FROM academic_program" +
+                    " WHERE Classroom = ? AND Classroom_Number = ? AND Day = ?" +
+                    " AND LessonTime = ?";
+
+            int availablesRoom = jdbcTemplate.queryForObject(
+                    sqlRoomAvailables,
+                    new Object[]{intClassroom,Classroom_Number, Day, LessonTime},
+                    Integer.class
+            );
+
+
+            if (availablesEpisode != 0){
+                System.out.println(alertMesage);
+                alertMesage = alertMesage + "Bu bölümün o gün zaten başka bir dersi var (!) \n";
+            }
+            if (availablesTeacher != 0){
+                alertMesage = alertMesage + "Bu öğretmenin o gün zaten başka bir dersi var (!) \n";
+                System.out.println(alertMesage);
+            }
+            if (availablesRoom != 0){
+                System.out.println(alertMesage);
+                alertMesage = alertMesage + "Bu dersliğin o gün zaten başka bir dersi var (!) \n";
+            }
+
+            if (availablesRoom + availablesTeacher + availablesEpisode != 0) {
+                int cevap = JOptionPane.showConfirmDialog(null, alertMesage, "Uyarı", JOptionPane.YES_NO_OPTION);
+
+                if (cevap == JOptionPane.YES_OPTION) {
+                    System.out.println("Evet seçildi, true döndürülüyor.");
+                    // İşlemlerinizi gerçekleştirin...
+                    return true;
+                } else {
+                    System.out.println("Hayır seçildi, false döndürülüyor.");
+                    return false;
+                }
+            }
+
+
+
+
+        }
         return true;
     }
 
